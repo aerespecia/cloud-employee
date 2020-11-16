@@ -4,9 +4,9 @@
   "port": 5432,
   "username": "postgres",
   "password": "cloudTest123!",
-  "database": "cloud_test",
+  "database": "cloud_db",
   "entities": [
-    "**/*.entity{.ts,.js}"
+    "src/model/*.entity{.ts,.js}"
   ],
   "migrationsTableName": "migration",
   "migrations": [

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserQueryParam } from '../model';
-
+import { paramToProperty, User, UserQueryParam } from '../model';
 import { Repository } from 'typeorm';
+import { filter, toLower } from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -21,14 +21,22 @@ export class UserService {
      * @param params UserQueryParam
      */
     public async getUser(params: UserQueryParam): Promise<User[]> {
-        console.log(params);
-        const users: User[] = await this.repo.find({
-                firstName: params.first_name,
-                lastName: params.last_name,
-                email: params.email,
-                petExperience: params.pet_experience,
-                state: params.state,
-            });
+        const filterObject = {};
+
+        for (const key of Object.keys(params)) {
+            filterObject[paramToProperty[key]] = params[key];
+          }
+        
+        let users: User[];
+        try {
+            users = await this.repo.find(filterObject);
+        } catch (error) {
+            throw new HttpException({
+                message: 'Error while searching for a user',
+                error
+            }, HttpStatus.BAD_REQUEST);
+        }
+        
         return users;
     }
 

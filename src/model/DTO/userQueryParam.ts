@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { IsOptional, IsString } from "class-validator";
 
 export class UserQueryParam {
@@ -16,4 +17,13 @@ export class UserQueryParam {
     @IsString()
     @IsOptional()
     email: string;
+}
+
+export const paramToProperty  = {
+    first_name: 'firstName',
+    last_name: 'lastName',
+    pet_experience: 'petExperience',
+    state: 'state',
+    email: 'email'
+
 }

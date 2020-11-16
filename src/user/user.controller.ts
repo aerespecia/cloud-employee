@@ -1,5 +1,5 @@
 import { Controller, Get, HttpException, HttpStatus, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import { size } from 'lodash';
+import * as _ from 'lodash';
 import { UserQueryParam } from '../model';
 import { UserService } from './user.service';
 
@@ -15,7 +15,7 @@ export class UserController {
     @Get('filter')
     @UsePipes(ValidationPipe)
     public async findByFilter(@Query() params:UserQueryParam) {
-        if(size(params) == 0)
+        if(_.isEmpty(params))
             throw new HttpException('Cannot filter with empty param', HttpStatus.BAD_REQUEST);
 
         return await this.userService.getUser(params);

@@ -13,7 +13,7 @@ echo "echo stop & remove old docker [$SERVER] and starting new fresh instance of
   -d postgres
 
 # wait for pg to start
-echo "sleep wait for pg-server [$SERVER] to startS";
+echo "sleep wait for pg-server [$SERVER] to start";
 sleep 3;
 
 # create the db 
